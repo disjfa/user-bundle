@@ -1,0 +1,9 @@
+{
+    "name": "disjfa/user-bundle",
+    "autoload": {
+        "psr-4": {
+            "Disjfa\\UserBundle\\": "src/"
+        }
+    },
+    "require": {}
+}
