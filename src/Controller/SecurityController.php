@@ -18,6 +18,7 @@ use Symfony\Component\Notifier\Recipient\Recipient;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
 use Symfony\Component\Security\Http\LoginLink\LoginLinkNotification;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SecurityController extends AbstractController
 {
@@ -28,6 +29,7 @@ class SecurityController extends AbstractController
         UserRepository $userRepository,
         Request $request,
         EntityManagerInterface $entityManager,
+        TranslatorInterface $translator,
     ): Response {
         // check if form is submitted
         if ($request->isMethod('POST')) {
@@ -56,7 +58,7 @@ class SecurityController extends AbstractController
             }
             $loginLinkDetails = $loginLinkHandler->createLoginLink($user);
 
-            $notification = new LoginLinkNotification($loginLinkDetails, 'Welcome to MOZAIC!');
+            $notification = new LoginLinkNotification($loginLinkDetails, $translator->trans('login-email-welcome'));
             $recipient = new Recipient($user->getEmail());
 
             $notifier->send($notification, $recipient);
