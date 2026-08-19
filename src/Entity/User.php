@@ -32,6 +32,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, UserEnt
     #[ORM\Column]
     private ?string $password = null;
 
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?\DateTimeInterface $lastLoggedIn = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -111,5 +114,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, UserEnt
     public function eraseCredentials(): void
     {
         // @deprecated, to be removed when upgrading to Symfony 8
+    }
+
+    public function setLastLoggedIn(\DateTimeImmutable $lastLoggedIn): static
+    {
+        $this->lastLoggedIn = $lastLoggedIn;
+
+        return $this;
     }
 }

@@ -29,7 +29,7 @@ class UserVoter extends Voter
             && $subject instanceof User;
     }
 
-    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token, ?\Symfony\Component\Security\Core\Authorization\Voter\Vote $vote = null): bool
     {
         return match ($attribute) {
             self::VIEW_ALL, self::CREATE, self::VIEW, self::UPDATE => $this->security->isGranted('ROLE_ADMIN'),
